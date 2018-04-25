@@ -10,10 +10,10 @@
 #define MAX_BUFFER_LENGTH 200
 class sserver{
   public:
-    int smallSet(char* machine_name, int port,unsigned int SecretKey, char* variable_name, char*value,unsigned short & data_length);
-    int smallGet(char* machine_name, int port,unsigned int SecretKey, char* variable_name, char*value,unsigned short & data_length);
-    int smallDigest(char* machine_name, int port,unsigned int SecretKey, char* data, unsigned short data_length, char* result,unsigned short & result_length);
-    int smallRun(char* machine_name, int port,unsigned int SecretKey, char* request, char* result,unsigned short & resultLength);
+    int smallSet(char* machine_name, int port,unsigned int SecretKey, char* variable_name, char* value,unsigned short & data_length);
+    int smallGet(char* machine_name, int port,unsigned int SecretKey, char* variable_name, char* &value,unsigned short & data_length);
+    int smallDigest(char* machine_name, int port,unsigned int SecretKey, char* data, unsigned short data_length, char* &result,unsigned short & result_length);
+    int smallRun(char* machine_name, int port,unsigned int SecretKey, char* request, char* &result,unsigned short & resultLength);
     enum request_operation:unsigned short{
       set,
       get,

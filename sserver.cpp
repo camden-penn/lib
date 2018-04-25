@@ -11,7 +11,7 @@ int sserver::smallSet(char* machine_name, int port,unsigned int SecretKey, char*
   sserver::response_t response = send_request(machine_name, port, req);
   return (int)(response.success);
 }
-int sserver::smallGet(char* machine_name, int port,unsigned int SecretKey, char* variable_name, char*value,unsigned short & data_length){
+int sserver::smallGet(char* machine_name, int port,unsigned int SecretKey, char* variable_name, char* & value,unsigned short & data_length){
   sserver::request_t req;
   req.key=SecretKey;
   req.request_type=request_operation::get;
@@ -26,7 +26,7 @@ int sserver::smallGet(char* machine_name, int port,unsigned int SecretKey, char*
   }
   return (int)(response.success);
 }
-int sserver::smallDigest(char* machine_name, int port,unsigned int SecretKey, char* data, unsigned short data_length, char* result,unsigned short & result_length){
+int sserver::smallDigest(char* machine_name, int port,unsigned int SecretKey, char* data, unsigned short data_length, char* &result,unsigned short & result_length){
   sserver::request_t req;
   req.key=SecretKey;
   req.request_type=request_operation::digest;
@@ -42,7 +42,7 @@ int sserver::smallDigest(char* machine_name, int port,unsigned int SecretKey, ch
   }
   return (int)(response.success);
 }
-int sserver::smallRun(char* machine_name, int port,unsigned int SecretKey, char* request, char* result,unsigned short & result_length){
+int sserver::smallRun(char* machine_name, int port,unsigned int SecretKey, char* request, char* &result,unsigned short & result_length){
   sserver::request_t req;
   req.key=SecretKey;
   req.request_type=request_operation::run;
