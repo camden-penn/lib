@@ -1,4 +1,9 @@
 #include "sserver.h"
+
+
+#include <iostream>
+
+
 int sserver::smallSet(char* machine_name, int port,unsigned int SecretKey, char* variable_name, char*value,unsigned short & data_length){
   sserver::request_t req;
   req.key=SecretKey;
@@ -6,7 +11,7 @@ int sserver::smallSet(char* machine_name, int port,unsigned int SecretKey, char*
   req.buffer_length=18+data_length;
   strncpy(req.data,variable_name,16);
   unsigned short temp = htons(data_length);
-  strncpy(req.data+16,(char*)(&temp),2);
+  memcpy(req.data+16, &temp, 2);
   strncpy(req.data+18,value,data_length);
   sserver::response_t response = send_request(machine_name, port, req);
   return (int)(response.success);
@@ -32,7 +37,7 @@ int sserver::smallDigest(char* machine_name, int port,unsigned int SecretKey, ch
   req.request_type=request_operation::digest;
   req.buffer_length=2+data_length;
   unsigned short temp = htons(data_length);
-  strncpy(req.data,(char*)(&temp),2);
+  memcpy(req.data, &temp, 2);
   strncpy(req.data+2,data,data_length);
   sserver::response_t response = send_request(machine_name, port, req);
   if(response.success==0){
