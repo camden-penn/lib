@@ -1,0 +1,4 @@
+#No swap files.
+*.swp
+#No obj directory. [Gotta fix my makefile.]
+obj/

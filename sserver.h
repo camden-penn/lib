@@ -4,6 +4,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <cstring>
 #include <cstdlib>
 #define MAX_BUFFER_LENGTH 200

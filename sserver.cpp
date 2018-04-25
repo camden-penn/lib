@@ -58,17 +58,8 @@ int sserver::smallRun(char* machine_name, int port,unsigned int SecretKey, char*
 }
 sserver::response_t sserver::send_request(char* machine_name, int port, sserver::request_t request){
   sserver::response_t response;
-  struct addrinfo ** found_addresses;
-  struct addrinfo * restrictions;
-  restrictions->ai_family=AF_INET;
-  restrictions->ai_socktype=0;
-  restrictions->ai_protocol=0;
-  restrictions->ai_flags=0;
-  restrictions->ai_addrlen=0;
-  restrictions->ai_addr=NULL;
-  restrictions->ai_canonname=NULL;
-  restrictions->ai_next=NULL;
-  struct addrinfo serv_addr;
+  //struct sockaddr_in address;
+  struct sockaddr_in server_address;
   int sock=0;
   
   //Open connection
@@ -77,16 +68,18 @@ sserver::response_t sserver::send_request(char* machine_name, int port, sserver:
     return response;
   }
     
-  memset(&serv_addr, '0', sizeof(serv_addr));
-        
-  
-  // Convert IPv4 and IPv6 addresses from text to binary form
-  if(getaddrinfo(machine_name,to_string(port),restrictions,found_addresses)<=0){
+  memset(&server_address, '0', sizeof(server_address));
+
+  server_address.sin_family=AF_INET;
+  server_address.sin_port=htons(port);
+  if(inet_pton(AF_INET, machine_name, &server_address.sin_addr)<=0) 
+  {
     response.success=-1;
     return response;
-  }
-  serv_addr=*(found_addresses[0]);
-  if (connect(sock,&serv_addr, sizeof(serv_addr)) < 0){
+  }    
+  
+  
+  if (connect(sock,(struct sockaddr*)&server_address, sizeof(server_address)) < 0){
     response.success=-1;
     return response;
   }
